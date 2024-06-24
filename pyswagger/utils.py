@@ -9,7 +9,17 @@ import re
 import os
 import operator
 import functools
+
 import collections
+
+# Mapping and Mutable Mapping moved to collections.abc in Python 3.10
+try:
+    from collections import abc
+    collections.MutableMapping = abc.MutableMapping
+    collections.Mapping        = abc.Mapping
+except:
+    pass
+
 
 #TODO: accept varg
 def scope_compose(scope, name, sep=private.SCOPE_SEPARATOR):

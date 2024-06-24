@@ -8,6 +8,14 @@ import io, codecs
 import collections
 import logging
 
+# Mapping and Mutable Mapping moved to collections.abc in Python 3.10
+try:
+    from collections import abc
+    collections.MutableMapping = abc.MutableMapping
+    collections.Mapping        = abc.Mapping
+except:
+    pass
+
 
 logger = logging.getLogger(__name__)
 
