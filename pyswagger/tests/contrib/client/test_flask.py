@@ -196,8 +196,18 @@ class FlaskTestCase(unittest.TestCase):
         headers = [('X-TEST-HEADER', 'aaa'), ('X-TEST-HEADER', 'bbb')]
         resp = self.client.request(
             sapp.op['updatePet'](body=dict(id=1, name='Tom1')),
-            headers=headers
+            headers=headers,
+            opt={'join_headers': False}
         )
         self.assertEqual(received_headers.get_all('X-TEST-HEADER'), ['aaa, bbb'])
 
+ 
+        # with 'join_headers'
+        resp = self.client.request(
+            sapp.op['updatePet'](body=dict(id=1, name='Tom1')),
+            headers=headers,
+            opt={'join_headers': True}
+        )
+
+        self.assertEqual(received_headers.get_all('X-TEST-HEADER'), ['aaa,bbb'])
 
