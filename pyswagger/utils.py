@@ -2,7 +2,7 @@ from __future__ import absolute_import
 from .consts import private
 from .errs import CycleDetectionError
 import six
-import imp
+from importlib import import_module
 import sys
 import datetime
 import re
@@ -137,12 +137,12 @@ class FixedTZ(datetime.tzinfo):
         return datetime.timedelta(0)
 
 _iso8601_fmt = re.compile(''.join([
-    '(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})', # YYYY-MM-DD
-    'T', # T
-    '(?P<hour>\d{2}):(?P<minute>\d{2})(:(?P<second>\d{1,2})(\.(?P<microsecond>\d{1,6}))?)?', # hh:mm:ss.ms
-    '(?P<tz>Z|[+-]\d{2}:\d{2})?' # Z or +/-hh:mm
+    r'(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})', # YYYY-MM-DD
+    r'T', # T
+    r'(?P<hour>\d{2}):(?P<minute>\d{2})(:(?P<second>\d{1,2})(\.(?P<microsecond>\d{1,6}))?)?', # hh:mm:ss.ms
+    r'(?P<tz>Z|[+-]\d{2}:\d{2})?' # Z or +/-hh:mm
 ]))
-_iso8601_fmt_date = re.compile('(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})') # YYYY-MM-DD
+_iso8601_fmt_date = re.compile(r'(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})') # YYYY-MM-DD
 
 def from_iso8601(s):
     """ convert iso8601 string to datetime object.
